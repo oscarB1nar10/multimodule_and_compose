@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="multi_module_and_Compose.buildSrc" target="11" />
+      <module name="MultimoduleCompose.app" target="11" />
+      <module name="MultimoduleCompose.components" target="11" />
+      <module name="MultimoduleCompose.hero.ui-hero-detail" target="11" />
+      <module name="MultimoduleCompose.hero.ui-hero-list" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
