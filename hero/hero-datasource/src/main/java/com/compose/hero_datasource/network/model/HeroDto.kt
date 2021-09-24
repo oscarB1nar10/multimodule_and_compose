@@ -1,4 +1,4 @@
-package com.compose.hero_datasource.network
+package com.compose.hero_datasource.network.model
 
 import com.compose.hero_datasource.network.EndPoints.BASE_URL
 import com.compose.hero_domain.Hero
