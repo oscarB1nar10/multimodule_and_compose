@@ -38,9 +38,6 @@ interface HeroCache {
         fun build(sqlDriver: SqlDriver): HeroCache {
             return HeroCacheImpl(HeroDatabase(sqlDriver))
         }
-        val schema: SqlDriver.Schema = HeroDatabase.Schema
-
-        val dbName: String = "heros.db"
     }
 
 }
