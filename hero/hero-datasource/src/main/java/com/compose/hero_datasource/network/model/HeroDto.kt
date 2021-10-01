@@ -8,7 +8,6 @@ import com.compose.hero_domain.getHeroRole
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class HeroDto(
 
@@ -186,7 +185,7 @@ fun HeroDto.toHero(): Hero {
         turboPicks = turboPicks,
         turboWins = turboWins,
         proWins = proWins ?: 0,
-        proPick = proPick ?: 0,
+        proPick = proPick?: 0,
         firstPick = firstPick,
         firstWin = firstWin,
         secondPick = secondPick,
@@ -205,4 +204,3 @@ fun HeroDto.toHero(): Hero {
         eighthPick = eighthPick,
     )
 }
-
