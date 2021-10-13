@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import coil.ImageLoader
 import com.compose.core.DataState
 import com.compose.core.Logger
 import com.compose.core.ProgressBarState
@@ -28,6 +29,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val imageLoader = ImageLoader.Builder(applicationContext)
+            .error(R.drawable.error_image)
+            .placeholder(R.drawable.white_background)
+            .availableMemoryPercentage(.25)
+            .crossfade(true)
+            .build()
 
         val getHeros = HeroInteractors.build(
             sqlDriver = AndroidSqliteDriver(
@@ -63,7 +71,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaInfoTheme {
-                HeroList(state = state.value)
+                HeroList(
+                    state = state.value,
+                    imageLoader = imageLoader
+                )
             }
 
         }
