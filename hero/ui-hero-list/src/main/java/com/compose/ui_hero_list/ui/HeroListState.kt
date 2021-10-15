@@ -1,4 +1,4 @@
-package com.compose.ui_hero_list
+package com.compose.ui_hero_list.ui
 
 import com.compose.core.ProgressBarState
 import com.compose.hero_domain.Hero
