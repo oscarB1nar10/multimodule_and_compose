@@ -1,4 +1,4 @@
-package com.compose.ui_hero_list
+package com.compose.ui_hero_list.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
