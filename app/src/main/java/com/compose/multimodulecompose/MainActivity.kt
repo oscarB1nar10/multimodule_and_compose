@@ -4,8 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
+import com.compose.multimodulecompose.navigation.Screen
 import com.compose.multimodulecompose.ui.theme.DotaInfoTheme
+import com.compose.ui_hero_detail.HeroDetail
 import com.compose.ui_hero_list.ui.HeroList
 import com.compose.ui_hero_list.ui.HeroListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,13 +30,48 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaInfoTheme {
-                val viewModel: HeroListViewModel = hiltViewModel()
-                HeroList(
-                    state = viewModel.state.value,
-                    imageLoader = imageLoader
-                )
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.HeroList.route,
+                    builder = {
+                        addHeroList(
+                            navController = navController,
+                            imageLoader = imageLoader
+                        )
+
+                        heroDetail()
+                    })
+
             }
 
         }
+    }
+}
+
+fun NavGraphBuilder.addHeroList(
+    navController: NavController,
+    imageLoader: ImageLoader
+) {
+    composable(
+        route = Screen.HeroList.route
+    ) {
+        val viewModel: HeroListViewModel = hiltViewModel()
+        HeroList(
+            state = viewModel.state.value,
+            imageLoader = imageLoader,
+            navigateToDetailScreen = { heroId ->
+                navController.navigate("${Screen.HeroDetail.route}/$heroId")
+            }
+        )
+    }
+}
+
+fun NavGraphBuilder.heroDetail() {
+    composable(
+        route = Screen.HeroDetail.route + "/{heroId}",
+        arguments = Screen.HeroDetail.arguments
+    ) { navBackStackEntry ->
+        HeroDetail(heroId = navBackStackEntry.arguments?.get("heroId") as Int?)
     }
 }
