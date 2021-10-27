@@ -16,7 +16,7 @@ class GetHeroFromCache(
         heroId: Int
     ): Flow<DataState<Hero>> = flow {
         try {
-            emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
+            emit(DataState.Loading<Hero>(progressBarState = ProgressBarState.Loading))
 
             // Emit data from cache (Single source of truth)
             val cachedHero =
@@ -27,7 +27,7 @@ class GetHeroFromCache(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
-                DataState.Response(
+                DataState.Response<Hero>(
                     uiComponent = UIComponent.Dialog(
                         title = "Error",
                         description = e.message ?: "Unknown Error"
