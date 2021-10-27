@@ -14,6 +14,8 @@ sealed class Screen(
         arguments = emptyList()
     )
 
+    // The arguments passed through <nav Arguments> are directly saved into
+    // <SavedStateHandle> so we can retrieve those in whatever viewModel.
     object HeroDetail : Screen(
         route = "heroDetail",
         arguments = listOf(
