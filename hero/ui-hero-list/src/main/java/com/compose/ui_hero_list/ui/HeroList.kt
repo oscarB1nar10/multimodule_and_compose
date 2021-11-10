@@ -22,6 +22,7 @@ import com.compose.ui_hero_list.components.HeroListToolbar
 @Composable
 fun HeroList(
     state: HeroListState,
+    events: (HeroListEvents) -> Unit,
     imageLoader: ImageLoader,
     navigateToDetailScreen: (Int) -> Unit
 ) {
@@ -30,18 +31,19 @@ fun HeroList(
             .fillMaxSize()
     ) {
         Column {
-            val name = remember { mutableStateOf("") }
             HeroListToolbar(
-                heroName = name.value,
+                heroName = state.heroName,
                 onHeroNameChanged = { heroName ->
-                    name.value = heroName
+                    events(HeroListEvents.UpdateHeroName(heroName = heroName))
                 },
-                onExecuteSearch = { /*TODO*/ },
+                onExecuteSearch = {
+                    events(HeroListEvents.FilterHeros)
+                },
                 onShowFilterDialog = {}
             )
 
             LazyColumn {
-                items(state.heros) { hero ->
+                items(state.filteredHeros) { hero ->
                     HeroListItem(
                         imageLoader = imageLoader,
                         hero = hero,
