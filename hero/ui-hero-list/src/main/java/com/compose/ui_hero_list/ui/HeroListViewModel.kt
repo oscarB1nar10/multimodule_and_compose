@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.compose.core.DataState
 import com.compose.core.Logger
 import com.compose.core.UIComponent
+import com.compose.hero_domain.Hero
 import com.compose.hero_interactors.GetHeros
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -28,12 +29,32 @@ constructor(
         onTriggerEvent(HeroListEvents.GetHeros)
     }
 
-    private fun onTriggerEvent(event: HeroListEvents) {
+    fun onTriggerEvent(event: HeroListEvents) {
         when (event) {
             is HeroListEvents.GetHeros -> {
                 getHeros()
             }
+
+            is HeroListEvents.FilterHeros -> {
+                filterHeros()
+            }
+
+            is HeroListEvents.UpdateHeroName -> {
+                updateHeroName(event.heroName)
+            }
         }
+    }
+
+    private fun updateHeroName(heroName: String) {
+        state.value = state.value.copy(heroName = heroName)
+    }
+
+    private fun filterHeros() {
+        val filteredList: MutableList<Hero> = state.value.heros.filter {
+            it.localizedName.lowercase().contains(state.value.heroName.lowercase())
+        }.toMutableList()
+
+        state.value = state.value.copy(filteredHeros = filteredList)
     }
 
     private fun getHeros() {
@@ -53,6 +74,7 @@ constructor(
 
                 is DataState.Data -> {
                     state.value = state.value.copy(heros = dataState.data ?: listOf())
+                    filterHeros()
                 }
 
                 is DataState.Loading -> {
