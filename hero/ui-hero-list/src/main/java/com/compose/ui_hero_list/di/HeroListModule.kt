@@ -1,6 +1,7 @@
 package com.compose.ui_hero_list.di
 
 import com.compose.core.Logger
+import com.compose.hero_interactors.FilterHeros
 import com.compose.hero_interactors.GetHeros
 import com.compose.hero_interactors.HeroInteractors
 import dagger.Module
@@ -30,5 +31,13 @@ object HeroListModule {
         interactors: HeroInteractors
     ): GetHeros {
         return interactors.getHeros
+    }
+
+    @Provides
+    @Singleton
+    fun provideFilterHeros(
+        interactors: HeroInteractors
+    ): FilterHeros {
+        return interactors.filterHeros
     }
 }
